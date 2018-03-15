@@ -1,1 +1,178 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+  background-color: #FAFAFA;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+}
+
+.main-tile {
+  background-color: #009688;
+}
+
+.display-4 {
+  color: #009688;
+}
+
+@media only screen and (max-width: 600px) {
+  .card-height-long {
+    height: 361px;
+  }
+  .card-height-short {
+    height: 251px;
+  }
+
+  .group-card-height {
+    height: 381px;
+  }
+
+  .row-card-height {
+    height: 281px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .card-height-long {
+    height: 361px;
+  }
+  .card-height-short {
+    height: 251px;
+  }
+
+  .group-card-height {
+    height: 381px;
+  }
+
+  .row-card-height {
+    height: 381px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .card-height-long {
+    height: 271px;
+  }
+  .card-height-short {
+    height: 271px;
+  }
+
+  .group-card-height {
+    height: 321px;
+  }
+  .row-card-height {
+    height: 321px;
+  }
+}
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+[class*="col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+.mat-elevation {
+    z-index: 999;
+    -webkit-box-shadow: 0 2px 2px 2px rgba(0,0,0,.3);
+    -moz-box-shadow: 0 2px 2px 2px rgba(0,0,0,.3);
+    box-shadow: 0 2px 2px 2px rgba(0,0,0,.3);
+    color: #FFFFFF;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+mat-sidenav {
+  width: 270px;
+}
+
+.example-container {
+  position: fixed !important;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+mat-card {
+  height: 100%;
+}
+
+.card-background-image {
+  background-repeat: no-repeat; 
+  background-size: contain;
+}
+
+.tint-background {
+  position: absolute;
+  width: 100%;
+  color: #ffffff;
+  padding: 15px;
+  background-color: rgb(0, 0, 0, .2);
+  bottom: 24px;
+}
+
+.header-image {
+  background-color: #009688;
+  text-align: center;
+}
+
+.center-content {
+  text-align: center;
+}
+
