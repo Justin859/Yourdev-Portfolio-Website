@@ -1,8 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireDatabase } from 'angularfire2/database-deprecated';
-import { MatIconRegistry, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material';
+import { FormBuilder, FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import { MatSnackBar } from '@angular/material';
+import { MessageService } from '../message.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -18,16 +22,28 @@ export class ContactComponent implements OnInit {
   name_value = '';
   email_value = '';
   query_value = '';
+  recaptchaReactive = '';
   
-  constructor(private fb: FormBuilder, private db: AngularFireDatabase, public dialog: MatDialog) {
+  constructor(
+   private fb: FormBuilder,
+   private db: AngularFireDatabase,
+   private messageService: MessageService,
+   public snackBar: MatSnackBar,
+   private titleService: Title) {
     this.createForm();
+    
+  }
+
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
   }
 
   createForm() {
     this.formQuery = this.fb.group({
-      name: ['', Validators.required, Validators.minLength(2)],
-      email: ['', Validators.email],
-      message: ['', Validators.required],
+      name: ['', Validators.compose([Validators.minLength(2), Validators.required])],
+      email: ['', Validators.compose([Validators.email, Validators.required])],
+      message: ['', Validators.compose([Validators.minLength(2), Validators.required])],
+      recaptchaReactive: [null, Validators.required]
     });
     
   }
@@ -46,39 +62,22 @@ export class ContactComponent implements OnInit {
     this.db.list('/messages').push(formRequest);
     this.formQuery.reset();
 
+    this.messageService.add(`Thank you, ${name}! Your message has been sent. We'll will be in touch as soon as possible.`);
+    if (this.messageService.messages.length) {
+
+      this.snackBar.open(this.messageService.messages[0], "OK").afterDismissed().subscribe(() => {
+        this.messageService.clear();
+      });
+    }
   }
 
-  afterSubmission() {
-    let dialogRef = this.dialog.open(ContactDialog, {
-      width: '300px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      //location.reload();
-      console.log('The dialog was closed');
-    });
+  resolved(captchaResponse: string) {
+    this.formQuery.controls['recaptchaReactive'].setErrors(null);
   }
 
   ngOnInit() {
-    
+    this.setTitle("Yourdev | Contact");
   }
 
 }
 
-@Component({
-  selector: 'app-contact-dialog',
-  templateUrl: '../contact-dialog/contact-dialog.component.html',
-})
-
-export class ContactDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<ContactDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    //location.reload();
-    this.dialogRef.close();
-  }
-
-}

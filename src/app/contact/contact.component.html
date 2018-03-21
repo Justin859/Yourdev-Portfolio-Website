@@ -1,50 +1,68 @@
-<div class="row">
-  <div class="col-12" style="height: 281px;">
-    <mat-card class="card-background-image" style="background: url('../assets/images/telephone-586268_1920.jpg') center / cover;">
-      <mat-card-content></mat-card-content>
-      <mat-card-footer class="tint-background">
-        <h2>Contact Us For More Information</h2>
-        <p>We're more than happy to answer any questions you have about Yourdev...
-            and how to get your company on the web with us.</p>
-      </mat-card-footer>
-    </mat-card>
-  </div>
-</div>
+<nav mat-tab-nav-bar>
+    <a mat-tab-link [routerLinkActiveOptions]="{exact: true}"
+        routerLink="/contact/query"
+        routerLinkActive #rla="routerLinkActive"
+        [active]="true">
+    QUERY   
+    </a>
+    <a mat-tab-link [routerLinkActiveOptions]="{exact: true}"
+    routerLink="/contact/get-started"
+    routerLinkActive #rla="routerLinkActive"
+    [active]="false">
+    GET STARTED   
+    </a>              
+  </nav>
+  <router-outlet></router-outlet>
+
 
 <div class="row">
-  <div class="col-12">
-    <mat-card>
-        <form class="example-form" [formGroup]="formQuery" (ngSubmit)="onSubmit();">
-            <mat-form-field class="example-full-width" >
-              <input matInput placeholder="your name" type="text" minlength="2" placeholder="Name" formControlName="name" [(ngModel)]="name_value">
-              <button mat-button *ngIf="name_value" matSuffix mat-icon-button aria-label="Clear" (click)="name_value=''">
-                <mat-icon>close</mat-icon>
-              </button>
-            </mat-form-field>
-            <mat-form-field class="example-full-width" >
-              <input matInput type="email" placeholder="Email" formControlName="email" [(ngModel)]="email_value">
-              <button mat-button *ngIf="email_value" matSuffix mat-icon-button aria-label="Clear" (click)="email_value=''">
-                <mat-icon>close</mat-icon>
-              </button>
-              <mat-error *ngIf="formQuery.get('email').hasError('email') && !formQuery.get('email').hasError('required')">
-                  Please enter a valid email address
-              </mat-error>
-                <mat-error *ngIf="formQuery.get('email').hasError('required')">
-                  Email is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-            
-            <mat-form-field class="example-full-width" > 
-                <textarea matInput class="example-full-width" minlength="2" placeholder="Message" formControlName="message" matTextareaAutosize matAutosizeMinRows="10"
-                matAutosizeMaxRows="15" [(ngModel)]="query_value"></textarea>
-                <button mat-button *ngIf="query_value" matSuffix mat-icon-button aria-label="Clear" (click)="query_value=''">
+    <div class="col-12" style="height: 281px;">
+      <mat-card class="card-background-image" style="background: url('../assets/images/telephone-586268_1920.jpg') center / cover;">
+        <mat-card-content></mat-card-content>
+        <mat-card-footer class="tint-background">
+          <h2>Contact Us For More Information</h2>
+          <p>We're more than happy to answer any questions you have about Yourdev...
+              and how to get your company on the web with us.</p>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <mat-card>
+          <form class="example-form" [formGroup]="formQuery" (ngSubmit)="onSubmit();">
+              <mat-form-field class="example-full-width" >
+                <input matInput placeholder="your name" type="text" minlength="2" placeholder="Name" formControlName="name" [(ngModel)]="name_value">
+                <button mat-button *ngIf="name_value" matSuffix mat-icon-button aria-label="Clear" (click)="name_value=''">
                   <mat-icon>close</mat-icon>
                 </button>
-            </mat-form-field>
-            
-            <button mat-raised-button color="primary" (click)="afterSubmission()" [disabled]="formQuery.pristine || formQuery.invalid" type="submit">Submit</button>
-          </form>
-    </mat-card>
-  </div>
-</div>
-  
+              </mat-form-field>
+              <mat-form-field class="example-full-width" >
+                <input matInput type="email" placeholder="Email" formControlName="email" [(ngModel)]="email_value">
+                <button mat-button *ngIf="email_value" matSuffix mat-icon-button aria-label="Clear" (click)="email_value=''">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="formQuery.get('email').hasError('email') && !formQuery.get('email').hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                  <mat-error *ngIf="formQuery.get('email').hasError('required')">
+                    Email is <strong>required</strong>
+                  </mat-error>
+              </mat-form-field>
+              <mat-form-field class="example-full-width" > 
+                  <textarea matInput minlength="2" placeholder="Message" formControlName="message" matTextareaAutosize matAutosizeMinRows="10"
+                  matAutosizeMaxRows="15" [(ngModel)]="query_value"></textarea>
+                  <button mat-button *ngIf="query_value" matSuffix mat-icon-button aria-label="Clear" (click)="query_value=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
+              </mat-form-field>
+              
+              <div class="re-captcha" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;">
+                  <re-captcha formControlName="recaptchaReactive" ngDefaultControl (resolved)="resolved($event)" siteKey="6Ld9WU0UAAAAAPGXnAQPvZpqFjNG1Etn9_KfxRjM"></re-captcha>
+              </div>
+              <button mat-raised-button color="primary" [disabled]="formQuery.invalid" type="submit">Submit</button>
+            </form>
+      </mat-card>
+    </div>
+  </div>    

@@ -27,7 +27,7 @@ exports.sendContactMessage = functions.database.ref('/messages/{pushKey}').onWri
   const snapshot = event.data;
   const val = snapshot.val();
   // Only send email for new messages.
-    if (snapshot.previous.val() || !snapshot.val().name) {
+    if (snapshot.previous.val() || !snapshot.val().date) {
       return null;
     }
 
@@ -41,6 +41,38 @@ exports.sendContactMessage = functions.database.ref('/messages/{pushKey}').onWri
       },
       ReplyToAddresses: [val.email],
       Source: `${val.name} <query@yourdev.co.za>`, // this has to be verified email in SES
+      };
+
+    ses.sendEmail(emailParams, (error, data) => {
+      if (error) {
+         // handle error
+         emailResponse = error;
+      } else {
+         emailResponse = data;
+         // handle success
+      }
+    })
+    return emailResponse;
+});
+
+exports.sendClientform = functions.database.ref('/forms/{pushKey}').onWrite((event) => {
+  const snapshot = event.data;
+  const val = snapshot.val();
+  // Only send email for new messages.
+    if (snapshot.previous.val() || !snapshot.val().date) {
+      return null;
+    }
+
+    const emailParams = {
+      Destination: { ToAddresses: [ 'EcmaStack <justin@yourdev.co.za>' ] },
+      Message: {
+        Body: { Html: {
+          Data: `${val.html}`,
+          Charset: 'UTF-8' } },
+        Subject: { Data: 'Client Form', Charset: 'UTF-8' }
+      },
+      ReplyToAddresses: [val.emailAddressFormCtrl],
+      Source: `${val.firstNameFormCtrl} ${val.lastNameFormCtrl} <query@yourdev.co.za>`, // this has to be verified email in SES
       };
 
     ses.sendEmail(emailParams, (error, data) => {

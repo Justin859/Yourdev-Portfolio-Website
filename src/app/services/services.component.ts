@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-services',
@@ -8,9 +10,14 @@ import {MatIconRegistry} from '@angular/material';
 })
 export class ServicesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private titleService: Title) { }
+
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
+  }
 
   ngOnInit() {
+    this.setTitle("Yourdev | Services");
   }
 
 }

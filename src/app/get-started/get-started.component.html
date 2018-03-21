@@ -1,0 +1,79 @@
+<nav mat-tab-nav-bar>
+    <a mat-tab-link [routerLinkActiveOptions]="{exact: true}"
+        routerLink="/contact/query"
+        routerLinkActive #rla="routerLinkActive"
+        [active]="false">
+    QUERY   
+    </a>
+    <a mat-tab-link [routerLinkActiveOptions]="{exact: true}"
+    routerLink="/contact/get-started"
+    routerLinkActive #rla="routerLinkActive"
+    [active]="true">
+    GET STARTED   
+    </a>              
+  </nav>
+<div class="row">
+  <div class="col-12">
+    <mat-card>
+      <mat-card-title>Client Form</mat-card-title>
+      <mat-card-subtitle>
+          This from will be uploaded to us so that we can start communicating straight away. We will send you a Quote (or Proposal) for your bussiness to agree upon.
+      </mat-card-subtitle>
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmission()">
+        <mat-vertical-stepper formArrayName="formArray" #linearVerticalStepper="matVerticalStepper" [linear]="false">
+          <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+            <ng-template matStepLabel>Your Information</ng-template>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="First Name" formControlName="firstNameFormCtrl" type="text">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Last Name" formControlName="lastNameFormCtrl" type="text">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Email Address" formControlName="emailAddressFormCtrl" type="email">
+              </mat-form-field>
+              <div>
+                <button mat-fab matStepperNext type="button">NEXT</button>
+              </div>
+          </mat-step>
+          <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+              <ng-template matStepLabel>Company Details</ng-template>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Company Name" formControlName="companyNameFormCtrl" type="text">
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <textarea matInput placeholder="Physical Address" formControlName="physicalAddressFormCtrl" matTextareaAutosize matAutosizeMinRows="10"
+                matAutosizeMaxRows="15"></textarea>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <textarea matInput placeholder="Company Description" formControlName="companyDescriptionFormCtrl" matTextareaAutosize matAutosizeMinRows="10"
+                matAutosizeMaxRows="15"></textarea>                    
+              </mat-form-field> 
+              <button mat-fab matStepperPrevious color="accent" style="color:#FFF;" type="button">BACK</button>
+              <button mat-fab matStepperNext color="accent" type="button">NEXT</button>
+          </mat-step>
+          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+              <ng-template matStepLabel>Website</ng-template>
+              <mat-checkbox formControlName="hasDomainFormCtrl" style="padding-right: 15px;"></mat-checkbox><label>does your company have a registered domain?</label>
+              <br /><br />
+              <label>What type of website is needed?</label><br /><br />
+              <mat-radio-group matInput formControlName="websiteTypeFormCtrl">
+                <mat-radio-button value="standardWebsite" [checked]="true" >Standard Website</mat-radio-button><br /><br />
+                <mat-radio-button value="webApplication">Web Application</mat-radio-button>
+              </mat-radio-group>
+            <mat-form-field class="example-full-width">
+                <textarea matInput placeholder="Company Description" formControlName="websiteDescriptionFormCtrl" matTextareaAutosize matAutosizeMinRows="10"
+                matAutosizeMaxRows="15"></textarea>   
+            </mat-form-field> 
+            <div class="re-captcha" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;">
+                <re-captcha formControlName="recaptchaReactiveFormCtrl" ngDefaultControl (resolved)="resolved($event)" siteKey="6Ld9WU0UAAAAAPGXnAQPvZpqFjNG1Etn9_KfxRjM"></re-captcha>
+            </div>
+            <button mat-fab matStepperPrevious color="accent" type="button" style="color:#FFF;">BACK</button>
+            <button mat-fab matStepperNext color="primary" [disabled]="formGroup.invalid" type="submit">SUBMIT</button> 
+          </mat-step>
+        </mat-vertical-stepper>
+      </form>
+    </mat-card>
+  </div>
+</div>
+  

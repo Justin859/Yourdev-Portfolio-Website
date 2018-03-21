@@ -4,8 +4,10 @@ import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import {MatButtonModule,
         MatIconModule,
         MatCheckboxModule,
@@ -13,9 +15,12 @@ import {MatButtonModule,
         MatTabsModule,
         MatDividerModule,
         MatCardModule,
+        MatSnackBarModule,
         MatGridListModule,
         MatListModule,
         MatFormFieldModule,
+        MatStepperModule,
+        MatRadioModule,
         MatInputModule,
         MatDialogModule,
         MatSidenavModule} from '@angular/material';
@@ -26,8 +31,39 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { ServicesComponent } from './services/services.component';
-import { ContactDialog } from './contact/contact.component';
-import { ContactDialogComponent } from './contact-dialog/contact-dialog.component';
+import { GetStartedComponent } from './get-started/get-started.component';
+import { MessageService } from './message.service';
+
+const appRoutes: Routes = [
+  {
+    path: '', component: HomeComponent,
+    data: {
+      title: 'Yourdev'
+    }
+  },
+
+  { path: 'services', component: ServicesComponent,
+    data: {
+      title: 'Yourdev | Services'
+    } 
+  },
+  {
+    path: 'contact/query',
+    component: ContactComponent,
+    data: {
+       title: 'Yourdev | Contact' 
+      }
+  },
+  {
+    path: 'contact/get-started',
+    component: GetStartedComponent,
+    data: {
+      title: 'Yourdev | Get Started'
+    }
+  }
+
+  //{ path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
   declarations: [
@@ -35,8 +71,7 @@ import { ContactDialogComponent } from './contact-dialog/contact-dialog.componen
     HomeComponent,
     ContactComponent,
     ServicesComponent,
-    ContactDialog,
-    ContactDialogComponent
+    GetStartedComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -44,7 +79,19 @@ import { ContactDialogComponent } from './contact-dialog/contact-dialog.componen
     AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
+    RecaptchaModule.forRoot(),
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
+    MatStepperModule,
     MatButtonModule,
+    MatRadioModule,
     MatIconModule,
     MatCheckboxModule,
     MatToolbarModule,
@@ -58,10 +105,12 @@ import { ContactDialogComponent } from './contact-dialog/contact-dialog.componen
     MatInputModule
   ],
   entryComponents: [
-    ContactDialog
+    
   ],
   providers: [
-    AngularFireDatabase
+    AngularFireDatabase,
+    MessageService,
+    Title
   ],
   
   bootstrap: [AppComponent]

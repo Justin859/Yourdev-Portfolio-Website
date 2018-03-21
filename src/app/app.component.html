@@ -13,10 +13,10 @@
 <mat-sidenav-container class="example-container">
     <mat-sidenav #sidenav mode="over">
         <mat-nav-list style="padding-top:65px;">
-            
-            <a href="/" mat-list-item> Home </a>
-            <a href="#0" mat-list-item> Get Started </a>
-            <a href="#0" mat-list-item> Portfolio </a>
+            <a routerLink="/" routerLinkActive="true" (click)="sidenav.toggle()" mat-list-item><mat-icon class="nav-icon" matListIcon>home</mat-icon>Home</a>
+            <a routerLink="/services" routerLinkActive="true" (click)="sidenav.toggle()" mat-list-item><mat-icon class="nav-icon" matListIcon>build</mat-icon>Services</a>
+            <a routerLink="/contact/query" routerLinkActive="true" (click)="sidenav.toggle()" mat-list-item><mat-icon class="nav-icon" matListIcon>mail</mat-icon>Contact</a>
+            <a routerLink="/contact/get-started" routerLinkActive="true" (click)="sidenav.toggle()" mat-list-item><mat-icon class="nav-icon" matListIcon>directions</mat-icon>Get Started</a>
         </mat-nav-list>
     </mat-sidenav>
   
@@ -27,12 +27,16 @@
                 <img src="../assets/logo.png">
             </mat-grid-tile>
         </mat-grid-list>
-        <mat-tab-group>
-          <mat-tab label="Home"><app-home></app-home></mat-tab>
-          <mat-tab label="Services"><app-services></app-services></mat-tab>
-          <mat-tab label="Contact"><app-contact></app-contact></mat-tab>
-        
-        </mat-tab-group>
+        <nav mat-tab-nav-bar>
+            <a mat-tab-link [routerLinkActiveOptions]="{exact: true}"
+                *ngFor="let link of navLinks"
+                [routerLink]="link.path"
+                routerLinkActive #rla="routerLinkActive"
+                [active]="rla.isActive">
+            {{link.label}}    
+            </a>           
+          </nav>
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 
